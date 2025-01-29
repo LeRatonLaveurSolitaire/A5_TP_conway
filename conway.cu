@@ -13,12 +13,38 @@ __global__ void game_of_life_kernel(int *grid, int *new_grid, int width,
       int x = block_start_x + threadIdx.x;
       int y = block_start_y + threadIdx.y;
 
-      if (x >= width || y >= height)
-        continue;
+      if (x >= width || y >= height);
+        //continue;
 
       // TODO: 1. Calculate the number of alive neighbors
+      int alive = 0;
+      for(int i = -1; i < 2; i++){
+        for(int j = -1; j < 2; j++){
+
+          if((x+i) < 0 || x+i> width-1 || y+j<0 || y+j>height-1 || (i == 0 && j == 0)){}
+          else{
+            alive += grid[(x+i)+(y*width+j*width)];
+          }
+        }
+      }
+
       // TODO: 2. Apply the rules of Conway's Game of Life
+      if(grid[x+y*width]){ // LIVE
+        if (alive < 2 || alive > 3){ // KILL
+          new_grid[x+y*width] = 0;
+        } else {
+          new_grid[x+y*width] = 1;
+        }
+      } else { // DED
+        if(alive == 3){ // BORN
+          new_grid[x+y*width] = 1;
+        } else {
+          new_grid[x+y*width] = 0;
+        }
+      }
+
       // TODO: 3. Write the result to the new grid
+      //new_grid = grid;
 
       // TODO(once you pass the conformance test): measure with nvprof, and
       // check for different ways of improving performance

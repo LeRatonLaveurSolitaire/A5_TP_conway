@@ -98,7 +98,7 @@ def update(frameNum, img, grid_ping, grid_pong, game):
 
 def show(grid_size, **kwargs):
     grid_ping = torch.randint(0, 2, (grid_size, grid_size), dtype=torch.int32)
-    if "file" in kwargs:
+    if kwargs.get("file") is not None:
         read_pattern(kwargs["file"], grid_ping)
     grid_ping = grid_ping.to("cuda")
     grid_pong = torch.empty_like(grid_ping)

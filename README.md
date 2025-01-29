@@ -51,11 +51,12 @@ The core of the project is built using CMake. The following commands will build 
 The project can be tested using the following command:
 
 ``` bash
-    # show the game of life animation (you can specify a starting grid with --file grids/<path_to_file>)
-    python conway.py show
-
-    # test if your modification are correct
+    # test if your program is correct
     python conway.py test
+
+    # show the game of life animation (you can specify a starting grid with --file grids/<path_to_file>)
+    # with your implementation (make sure your program pass the test first)
+    python conway.py show [--file grids/<path_to_file>]
 
     # check the speed of your implementation
     python conway.py profile
