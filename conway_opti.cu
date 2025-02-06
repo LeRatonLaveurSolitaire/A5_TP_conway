@@ -4,11 +4,11 @@
 
 __global__ void game_of_life_kernel(int *grid, int *new_grid, int width,
                                     int height) {
-  for (int block_start_y = blockIdx.y * blockDim.y; block_start_y < height;
+  for (int block_start_x = blockIdx.x * blockDim.x; block_start_x < width;
+       block_start_x += blockDim.x * gridDim.x) {
+
+    for (int block_start_y = blockIdx.y * blockDim.y; block_start_y < height;
          block_start_y += blockDim.y * gridDim.y) {
-  
-    for (int block_start_x = blockIdx.x * blockDim.x; block_start_x < width;
-        block_start_x += blockDim.x * gridDim.x) {
 
       int x = block_start_x + threadIdx.x;
       int y = block_start_y + threadIdx.y;
@@ -48,8 +48,7 @@ void game_of_life_step(torch::Tensor grid_in, torch::Tensor grid_out,
 
   #define WARP_SIZE 32
 
-  // const dim3 blockSize( WARP_SIZE,WARP_SIZE);
-  const dim3 blockSize( WARP_SIZE,3);
+  const dim3 blockSize(WARP_SIZE, WARP_SIZE);
   const dim3 gridSize(width/WARP_SIZE,height/WARP_SIZE);
 
   game_of_life_kernel<<<gridSize, blockSize, 0, cudaStream>>>(
