@@ -108,8 +108,7 @@ void game_of_life_step(torch::Tensor grid_in, torch::Tensor grid_out,
     cudaStream = c10::cuda::CUDAStream(stream.value()).stream();
   }
 
-  // Pour une raison inconnue, le code ne fonctionne pas avec un block de taille 32x3, mais fonctionne avec un block de taille 32x32
-  // Je garde pour avoir une performance relative plutot que de la vitesse pure
+
   const dim3 blockSize( WARP_SIZE,NB_BLOC_Y);
   const dim3 gridSize(width/WARP_SIZE+1,height/NB_BLOC_Y+1);
 
