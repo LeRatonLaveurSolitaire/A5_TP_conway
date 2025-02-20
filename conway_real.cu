@@ -5,6 +5,8 @@
 #define WARP_SIZE 32
 #define NB_BLOC_Y 3
 
+// OBSOLETE
+
 // Vectorized addition example
 __device__ unsigned int __vadd4(unsigned int a, unsigned int b) {
   unsigned int c;
