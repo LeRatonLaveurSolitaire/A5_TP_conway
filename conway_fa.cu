@@ -2,6 +2,8 @@
 #include <c10/cuda/CUDAStream.h>
 #include <torch/extension.h>
 
+// FAB EXPERIMENT
+
 #define WARP_SIZE 32
 #define NB_BLOC_Y 3
 
