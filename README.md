@@ -1,3 +1,5 @@
+Code maj du TP A5 sur le jeu de la vie
+
 # Conway's game of life in CUDA
 
 ## What is this all about?
