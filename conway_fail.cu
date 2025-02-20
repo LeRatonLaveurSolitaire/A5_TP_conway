@@ -2,6 +2,12 @@
 #include <c10/cuda/CUDAStream.h>
 #include <torch/extension.h>
 
+// Experimental 
+// N'est pas le plus rapide mais possède des implémentations possible :
+// - SHARED MEMORY
+// - VECTORIZATION DES CACLULS PAR INSTRUCTIONS PTX
+
+
 #define WARP_SIZE 8
 #define NB_BLOC_Y 3
 
@@ -104,8 +110,8 @@ void game_of_life_step(torch::Tensor grid_in, torch::Tensor grid_out,
 
   // Pour une raison inconnue, le code ne fonctionne pas avec un block de taille 32x3, mais fonctionne avec un block de taille 32x32
   // Je garde pour avoir une performance relative plutot que de la vitesse pure
-  const dim3 blockSize( WARP_SIZE,WARP_SIZE);
-  const dim3 gridSize(width/WARP_SIZE,height/WARP_SIZE);
+  const dim3 blockSize( WARP_SIZE,NB_BLOC_Y);
+  const dim3 gridSize(width/WARP_SIZE+1,height/NB_BLOC_Y+1);
 
   game_of_life_kernel<<<gridSize, blockSize, 0, cudaStream>>>(
     reinterpret_cast<unsigned int*>(grid_out.data_ptr<unsigned char>()),
