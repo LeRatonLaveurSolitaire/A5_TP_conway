@@ -25,6 +25,7 @@ __global__ void game_of_life_kernel(unsigned char *grid, unsigned char *new_grid
       if(x + i >= 0 && x + i < width && y + j >= 0 && y + j < height && (i != 0 || j != 0)) {
         alive += grid[(x + i) + (y + j) * width];
         //asm("vadd.u32.u32.u32.add %0, %1, %2, %3;" : "=r"(alive) : "r"(alive), "r"((int)grid[(x + i) + (y + j) * width]), "r"(0));
+        //asm("add.u8.u8.u8.add %0, %1, %2, %3;" : "=r"(alive) : "r"(alive), "r"((int)grid[(x + i) + (y + j) * width]), "r"(0));
       }
     }
   }

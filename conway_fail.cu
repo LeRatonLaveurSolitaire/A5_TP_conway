@@ -46,8 +46,6 @@ __global__ void game_of_life_kernel(unsigned int *grid, unsigned int *new_grid, 
   unsigned int alive = 0;
   unsigned int c1, c2;
 
-
-
   __shared__ unsigned int grid_s[(WARP_SIZE+2)*(NB_BLOC_Y+2)];
   grid_s[(threadIdx.x+1) + (threadIdx.y+1) * (WARP_SIZE+2)] = grid[x + y * width];
 
