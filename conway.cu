@@ -15,17 +15,12 @@ __global__ void game_of_life_kernel(unsigned char *grid, unsigned char *new_grid
   // Calculate the number of alive neighbors
   unsigned char alive = 0;
 
-  // int pointer to the new grid at x and y
-  //unsigned int* new_grid_ptr = (unsigned int*)(new_grid + x + y * width);
-
   // Neighbor sums
   for(char j = -1; j <= 1; j++){
     for(char i = -1; i <= 1; i++){
       // Check if the neighbor is within the grid bounds and not the current cell
       if(x + i >= 0 && x + i < width && y + j >= 0 && y + j < height && (i != 0 || j != 0)) {
         alive += grid[(x + i) + (y + j) * width];
-        //asm("vadd.u32.u32.u32.add %0, %1, %2, %3;" : "=r"(alive) : "r"(alive), "r"((int)grid[(x + i) + (y + j) * width]), "r"(0));
-        //asm("add.u8.u8.u8.add %0, %1, %2, %3;" : "=r"(alive) : "r"(alive), "r"((int)grid[(x + i) + (y + j) * width]), "r"(0));
       }
     }
   }
